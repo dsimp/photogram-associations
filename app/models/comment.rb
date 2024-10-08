@@ -2,7 +2,7 @@
 #
 # Table name: comments
 #
-#  id         :integer          not null, primary key
+#  id         :bigint           not null, primary key
 #  body       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -12,6 +12,9 @@
 
 class Comment < ApplicationRecord
   validates(:commenter, { :presence => true })
+
+  belongs_to(:commenter, class_name: "User", foreign_key: "author_id")
+  belongs_to(:photo, class_name: "Photo", foreign_key: "photo_id")
 
   # Association accessor methods to define:
   

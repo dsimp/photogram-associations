@@ -2,7 +2,7 @@
 #
 # Table name: photos
 #
-#  id             :integer          not null, primary key
+#  id             :bigint           not null, primary key
 #  caption        :text
 #  comments_count :integer
 #  image          :string
@@ -14,6 +14,13 @@
 
 class Photo < ApplicationRecord
   validates(:poster, { :presence => true })
+
+  belongs_to(:poster, class_name: "User", foreign_key: "owner_id")
+  has_many(:comments, class_name: "Comment", foreign_key: "photo_id")
+  has_many(:likes, class_name: "Like", foreign_key: "photo_id")
+  has_many(:fans, through: :likes,source: :fan)
+  has_many(:fans, through: :likes, source: :fan)
+
 
   # Association accessor methods to define:
   
